@@ -2,7 +2,7 @@
     position: relative;
     @include flex;
 
-    .base-select-list-trigger{
+    &-list-trigger{
         @include flex;
         @include base-shadow;
         align-items: center;
@@ -17,7 +17,7 @@
         }
     }
 
-    .base-select-list{
+    &-list{
         @include base-shadow;
         position: absolute;
         top: 0;
@@ -35,12 +35,17 @@
             z-index: 1;
         }
 
-        .base-select-list-item{
+        &-item{
             @extend .bold-600;
             margin: 10px 0;
 
             &:hover{
                 color: $color-light-grey;
+            }
+
+            &-changer{
+                display: inline-block;
+                width: 100%;
             }
         }
     }
