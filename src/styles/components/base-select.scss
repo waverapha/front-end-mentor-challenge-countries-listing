@@ -1,0 +1,47 @@
+.base-select{
+    position: relative;
+    @include flex;
+
+    .base-select-list-trigger{
+        @include flex;
+        @include base-shadow;
+        align-items: center;
+        justify-content: space-between;
+        min-width: 200px;
+        padding: 15px 20px;
+        border-radius: 5px;
+        background: var(--color-secondary);
+
+        .list-trigger-text{
+            @extend .bold-600;
+        }
+    }
+
+    .base-select-list{
+        @include base-shadow;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 15px 25px;
+        background: var(--color-secondary);
+        transition: all 0.2s;
+        opacity: 0;
+        z-index: -1;
+
+        &.active{
+            top: 52.5px;
+            opacity: 1;
+            z-index: 1;
+        }
+
+        .base-select-list-item{
+            @extend .bold-600;
+            margin: 10px 0;
+
+            &:hover{
+                color: $color-light-grey;
+            }
+        }
+    }
+}

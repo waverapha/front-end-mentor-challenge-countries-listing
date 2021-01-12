@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="country-card">
         Card
     </div>
 </template>
