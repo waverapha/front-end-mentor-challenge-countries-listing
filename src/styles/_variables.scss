@@ -2,6 +2,7 @@
 @import 'themes/light.scss';
 
 $app-mobile-viewport-size: 375px;
+$app-medium-viewport-size: $app-mobile-viewport-size * 2;
 $app-desktop-viewport-size: 1366px;
 
 $app-font-family: 'Nunito Sans', sans-serif;

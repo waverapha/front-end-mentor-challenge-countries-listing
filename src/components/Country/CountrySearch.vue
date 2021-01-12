@@ -1,6 +1,16 @@
 <template>
   <div class="country-search">
-      <input type="text">
+
+      <search width="1em" />
+
+      <input type="text"
+      autocomplete="off"
+      autocorrect="off"
+      autocapitalize="off"
+      spellcheck="false"
+      maxlength="120"
+      placeholder="Search for a country...">
+
   </div>
 </template>
 

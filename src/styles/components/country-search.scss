@@ -1,0 +1,21 @@
+.country-search{
+    @include flex(nowrap);
+    @include base-shadow;
+    width: 100%;
+    margin-bottom: 40px;
+    padding: 7.5px 35px;
+    align-items: center;
+    background-color: var(--color-secondary);
+    border-radius: 5px;
+    color: var(--color-input);
+
+    @media (min-width: $app-medium-viewport-size) {
+        width: 45%;
+        max-width: 400px;
+        margin-bottom: 0;
+    }
+
+    input{
+        margin-left: 20px;
+    }
+}

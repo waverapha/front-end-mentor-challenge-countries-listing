@@ -1,0 +1,9 @@
+.search-and-filter-bar{
+    @include flex;
+    align-items: center;
+
+    @media (min-width: $app-medium-viewport-size) {
+        flex-wrap: nowrap;
+        justify-content: space-between;
+    }
+}

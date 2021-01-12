@@ -4,5 +4,5 @@
 }
 
 @mixin base-shadow{
-    box-shadow: 0 2.5px 7.5px rgba($color-light-text, 5%);
+    box-shadow: 0 0 10px var(--color-base-shadow);
 }

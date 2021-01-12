@@ -7,6 +7,7 @@
     --color-grey: #{$color-light-grey};
     --color-text: #{$color-light-text};
     --color-input: #{$color-light-grey};
+    --color-base-shadow: #{$color-light-base-shadow};
 }
 
 *{
@@ -30,13 +31,14 @@ body{
         --color-grey: #{$color-dark-text};
         --color-text: #{$color-dark-text};
         --color-input: #{$color-dark-text};
+        --color-base-shadow: #{$color-dark-base-shadow};
     }
 }
 
 main{
     padding: 25px 15px;
 
-    @media (min-width: $app-mobile-viewport-size) {
+    @media (min-width: $app-desktop-viewport-size) {
         padding: 40px 80px;
     }
 

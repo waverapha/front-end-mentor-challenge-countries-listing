@@ -11,9 +11,14 @@
 </template>
 
 <script>
+
 import BaseSelect from '@/components/BaseSelect.vue'
+
 export default {
-  components: { BaseSelect },
+  components: {
+    BaseSelect
+  },
+
   data(){
     return {
       options: [
