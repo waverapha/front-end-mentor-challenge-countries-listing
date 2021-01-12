@@ -8,12 +8,21 @@ const routes = [
   {
     path: '/',
     name: 'CountryList',
-    component: CountryList
+    component: CountryList,
+    meta: {
+      title: () => 'Countries'
+    }
   },
   {
-    path: '/country/:id',
+    path: '/country/:country',
     name: 'country',
-    component: () => import('../views/CountryDetail.vue')
+    component: () => import('../views/CountryDetail.vue'),
+    meta: {
+      title: route => route.params.country
+    },
+    props: route => ({
+      countryName: route.params.country
+    })
   }
 ]
 
@@ -22,5 +31,15 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+const DEFAULT_TITLE = 'Countries Listing';
+
+router.beforeEach((to, from, next) => {
+  Vue.nextTick(() => {
+    document.title = `${to.meta.title(to)} | ${DEFAULT_TITLE}` || DEFAULT_TITLE;
+  });
+  
+  next();
+});
 
 export default router
