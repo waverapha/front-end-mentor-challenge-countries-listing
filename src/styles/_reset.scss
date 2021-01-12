@@ -1,0 +1,93 @@
+@import '_variables';
+
+:root{
+    font-size: $listing-font-size;
+    --color-primary: #{$color-light-primary};
+    --color-secondary: #{$color-light-secondary};
+    --color-grey: #{$color-light-grey};
+    --color-text: #{$color-light-text};
+    --color-input: #{$color-light-grey};
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+    transition: background-color 0.25s, color, fill;
+}
+
+body{
+    font-family: $app-font-family;
+    font-weight: $app-font-weight;
+    background-color: var(--color-primary);
+    color: var(--color-text);
+    fill: var(--color-text);
+
+    &[data-theme="dark"]{
+        --color-primary: #{$color-dark-primary};
+        --color-secondary: #{$color-dark-secondary};
+        --color-grey: #{$color-dark-text};
+        --color-text: #{$color-dark-text};
+        --color-input: #{$color-dark-text};
+    }
+}
+
+main{
+    padding: 25px 15px;
+
+    @media (min-width: $app-mobile-viewport-size) {
+        padding: 40px 80px;
+    }
+
+    .countries-listing-page{
+        font-size: $listing-font-size;
+    }
+
+    .country-detail-page{
+        font-size: $detail-font-size;
+    }
+}
+
+ul{
+    list-style: none;
+}
+
+a{
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+img{
+    max-width: 100%;
+    vertical-align: middle;
+}
+
+svg{
+    fill: currentColor;
+}
+
+input{
+    width: 100%;
+    outline: none;
+    padding: 7.5px;
+    font-size: inherit;
+    font-family: inherit;
+    background-color: var(--color-secondary);
+    color: var(--color-input);
+
+    &::placeholder {
+        color: var(--color-input);
+    }
+}
+
+.bold-600{
+    font-weight: 600;
+}
+
+.svg-icon{
+    @include flex;
+    align-items: center;
+    justify-content: center;
+}

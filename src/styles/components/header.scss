@@ -1,0 +1,24 @@
+header{
+    @include flex;
+    @include base-shadow;
+    
+    align-items: center;
+    justify-content: space-between;
+    padding: 32px 15px;
+    font-size: $listing-font-size;
+    background-color: var(--color-secondary);
+
+    @media (min-width: $app-desktop-viewport-size){
+        padding: 25px 80px;
+        font-size: $detail-font-size;
+    }
+
+    .theme-switcher{
+        @include flex;
+        align-items: center;
+
+        svg{
+            margin-right: 10px;
+        }
+    }
+}
