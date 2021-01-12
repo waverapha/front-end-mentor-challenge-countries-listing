@@ -23,21 +23,26 @@
         top: 0;
         left: 0;
         width: 100%;
+        transform: scale(0);
+        transform-origin: center 0;
         padding: 15px 25px;
         background: var(--color-secondary);
         transition: all 0.2s;
         opacity: 0;
-        z-index: -1;
 
         &.active{
             top: 52.5px;
             opacity: 1;
-            z-index: 1;
+            transform: scale(1);
         }
 
         &-item{
             @extend .bold-600;
             margin: 10px 0;
+
+            &:first-of-type{
+                font-weight: normal;
+            }
 
             &:hover{
                 color: $color-light-grey;

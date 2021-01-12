@@ -1,10 +1,9 @@
 <template>
   <div class="country-filter-by-continent">
     <base-select
-    list-class="region-list"
-    list-option-class="region-list-item"
     trigger-button-text="Filter by Region"
     :options=options
+    @change="changeOption"
     >
     </base-select>
   </div>
@@ -21,6 +20,7 @@ export default {
 
   data(){
     return {
+      option: null,
       options: [
         {id: 1, name: 'Africa'},
         {id: 2, name: 'Americas'},
@@ -28,6 +28,12 @@ export default {
         {id: 4, name: 'Europe'},
         {id: 5, name: 'Oceania'}
       ]
+    }
+  },
+
+  methods: {
+    changeOption(option){
+      this.option = option;
     }
   }
 }

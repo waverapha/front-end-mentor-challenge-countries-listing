@@ -2,25 +2,22 @@
   <div class="base-select">
 
     <a class="base-select-list-trigger" @click.stop="activeList = !activeList">
-      <span class="list-trigger-text">{{ (value) ? value.name : null || triggerButtonText }}</span>
+      <span class="list-trigger-text">{{ valueText }}</span>
       <div class="svg-icon">
         <chevron-down width="1em" />
       </div>
     </a>
 
-    <ul class="base-select-list" :class="{[listClass]: true, active: activeList}">
-
-      <li>
-        <a @click="changeChoosedOption({id: null, name: triggerButtonText})">{{ triggerButtonText }}</a>
-      </li>
+    <ul class="base-select-list" :class="baseSelectListClass">
 
       <li class="base-select-list-item" :class="listOptionClass"
-      v-for="option in options"
+      v-for="option in selectOptions"
       :key="option.id">
         <a
         class="base-select-list-item-changer"
         @click="changeChoosedOption(option)">{{ option.name }}</a>
       </li>
+
     </ul>
 
   </div>
@@ -29,14 +26,20 @@
 <script>
 export default {
     props: {
-        value: Object,
         options: {
           type: Array,
           required: true
         },
         listClass: String,
         listOptionClass: String,
-        triggerButtonText: String,
+        triggerButtonText: {
+          type: String,
+          default: 'Choose an option'
+        },
+        hasDefaultOption: {
+          type: Boolean,
+          default: true
+        },
     },
 
     mounted(){
@@ -47,6 +50,7 @@ export default {
 
     data(){
       return {
+        value: null,
         activeList: false,
       }
     },
@@ -54,8 +58,30 @@ export default {
     methods: {
       changeChoosedOption(option){
         this.value = option;
-        this.$emit('input', option);
         this.activeList = false;
+        this.$emit('change', option);
+      }
+    },
+
+    computed: {
+      selectOptions(){
+        const defaultOption = {id: null, name: this.triggerButtonText};
+
+        return ( this.hasDefaultOption ) ? [
+          defaultOption,
+          ...this.options
+        ] : this.options
+      },
+
+      valueText(){
+        return (this.value) ? this.value.name : null || this.triggerButtonText
+      },
+
+      baseSelectListClass(){
+        return {
+          [this.listClass]: true,
+          active: this.activeList
+        }
       }
     }
 }
