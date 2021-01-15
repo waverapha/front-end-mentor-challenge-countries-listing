@@ -30,8 +30,14 @@ export default {
           type: Array,
           required: true
         },
-        listClass: String,
-        listOptionClass: String,
+        listClass: {
+          type: String,
+          default: ''
+        },
+        listOptionClass: {
+          type: String,
+          default: ''
+        },
         triggerButtonText: {
           type: String,
           default: 'Choose an option'

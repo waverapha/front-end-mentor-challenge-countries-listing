@@ -1,6 +1,6 @@
 <template>
   <div class="country-filter-by-continent">
-    <base-select
+    <base-select data-testid="filter-by-region"
     trigger-button-text="Filter by Region"
     :options=options
     @change="changeOption"
