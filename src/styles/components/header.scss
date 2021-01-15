@@ -8,7 +8,7 @@ header{
     font-size: $listing-font-size;
     background-color: var(--color-secondary);
 
-    @media (min-width: $app-desktop-viewport-size){
+    @media (min-width: $app-large-viewport-size){
         padding: 25px 80px;
         font-size: $detail-font-size;
     }

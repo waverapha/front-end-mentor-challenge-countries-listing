@@ -2,7 +2,7 @@
     @include flex;
     align-items: center;
 
-    @media (min-width: $app-medium-viewport-size) {
+    @media (min-width: $app-small-viewport-size) {
         flex-wrap: nowrap;
         justify-content: space-between;
     }

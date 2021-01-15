@@ -1,9 +1,10 @@
 @import 'themes/dark.scss';
 @import 'themes/light.scss';
 
-$app-mobile-viewport-size: 375px;
-$app-medium-viewport-size: $app-mobile-viewport-size * 2;
-$app-desktop-viewport-size: 1366px;
+$app-xs-viewport-size: 375px;
+$app-small-viewport-size: 700px;
+$app-medium-viewport-size: 980px;
+$app-large-viewport-size: 1366px;
 
 $app-font-family: 'Nunito Sans', sans-serif;
 $app-font-weight: 300;

@@ -38,7 +38,7 @@ body{
 main{
     padding: 25px 15px;
 
-    @media (min-width: $app-desktop-viewport-size) {
+    @media (min-width: $app-large-viewport-size) {
         padding: 40px 80px;
     }
 

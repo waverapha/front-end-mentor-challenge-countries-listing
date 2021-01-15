@@ -1,0 +1,45 @@
+.country-list{
+    display: grid;
+    grid-template-columns: auto;
+    grid-gap: 40px;
+    margin: 40px 0;
+    padding: 0 40px;
+
+        @media (min-width: $app-small-viewport-size){
+            padding: 0;
+            grid-gap: 70px;
+            grid-template-columns: repeat(2, auto);
+        }
+
+        @media (min-width: $app-medium-viewport-size){
+            grid-template-columns: repeat(3, auto);
+        }
+    
+        @media (min-width: $app-large-viewport-size){
+            grid-template-columns: repeat(4, auto);
+        }
+
+    .country-card{
+        @include base-shadow;
+        width: 100%;
+        border-radius: 5px;
+        overflow: hidden;
+        background: var(--color-secondary);
+
+        &-content{
+            padding: 25px;
+            padding-bottom: 40px;
+
+            .country-name{
+                margin-bottom: 15px;
+            }
+
+            .country-information{
+
+                &-item{
+                    margin: 5px 0;
+                }
+            }
+        }
+    }
+}

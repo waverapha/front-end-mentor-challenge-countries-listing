@@ -7,7 +7,7 @@ describe('Countries List', () => {
     .should('be.visible')
   })
 
-  it('listing should has at least 1 element', () => {
+  it('listing should has at least 1 country card element', () => {
     cy.visit('/')
     cy.get('.country-listing-page')
     .find('.country-card')
