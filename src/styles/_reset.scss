@@ -7,6 +7,7 @@
     --color-grey: #{$color-light-grey};
     --color-text: #{$color-light-text};
     --color-input: #{$color-light-grey};
+    --color-input-placeholder: #{$color-light-grey};
     --color-base-shadow: #{$color-light-base-shadow};
 }
 
@@ -31,6 +32,7 @@ body{
         --color-grey: #{$color-dark-text};
         --color-text: #{$color-dark-text};
         --color-input: #{$color-dark-text};
+        --color-input-placeholder: #{$color-dark-text};
         --color-base-shadow: #{$color-dark-base-shadow};
     }
 }
@@ -61,6 +63,48 @@ a{
     transition: all 0.2s;
 }
 
+.focused-element{
+    transition: all 0.25s;
+    background-color: var(--color-text) !important;
+    color: var(--color-primary) !important;
+    border: 5px double var(--color-primary) !important;
+}
+
+button, input, textarea{
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+
+    &:focus,
+    &:active{
+        @extend .focused-element;
+        border: 0 !important;
+
+        &::placeholder {
+            color: var(--color-primary);
+        }
+    }
+}
+
+input{
+    width: 100%;
+    padding: 7.5px;
+    background-color: var(--color-secondary);
+    color: var(--color-input);
+    outline: 0;
+
+    &::placeholder {
+        color: var(--color-input-placeholder);
+    }
+}
+
+button{
+    padding: 5px;
+    background: none;
+    transition: all 0.25s;
+    @extend .cursor-pointer;
+}
+
 img{
     max-width: 100%;
     vertical-align: middle;
@@ -68,20 +112,6 @@ img{
 
 svg{
     fill: currentColor;
-}
-
-input{
-    width: 100%;
-    outline: none;
-    padding: 7.5px;
-    font-size: inherit;
-    font-family: inherit;
-    background-color: var(--color-secondary);
-    color: var(--color-input);
-
-    &::placeholder {
-        color: var(--color-input);
-    }
 }
 
 .bold-600{
@@ -92,4 +122,8 @@ input{
     @include flex;
     align-items: center;
     justify-content: center;
+}
+
+.cursor-pointer{
+    cursor: pointer;
 }

@@ -1,18 +1,34 @@
 <template>
   <div class="base-select">
 
-    <a class="base-select-list-trigger" @click.stop="activeList = !activeList">
+    <button
+    class="base-select-list-trigger"
+    @click.stop="activeList = !activeList"
+    aria-controls="base-select"
+    aria-haspopup="listbox"
+    :aria-expanded="[activeList]">
       <span class="list-trigger-text">{{ valueText }}</span>
-      <div class="svg-icon">
-        <chevron-down width="1em" />
+      <div class="svg-icon" role="presentation">
+        <chevron-down
+        width="1em" />
       </div>
-    </a>
+    </button>
 
-    <ul class="base-select-list" :class="baseSelectListClass">
+    <ul
+    id="base-select"
+    class="base-select-list"
+    :class="baseSelectListClass"
+    role="listbox"
+    :aria-hidden="[activeList]"
+    tabindex="-1"
+    :aria-label="valueText">
 
-      <li class="base-select-list-item" :class="listOptionClass"
+      <li
+      class="base-select-list-item"
+      :class="listOptionClass"
       v-for="option in selectOptions"
-      :key="option.id">
+      :key="option.id"
+      role="option">
         <a
         class="base-select-list-item-changer"
         @click="changeChoosedOption(option)">{{ option.name }}</a>
@@ -66,7 +82,7 @@ export default {
         this.value = option;
         this.activeList = false;
         this.$emit('change', option);
-      }
+      },
     },
 
     computed: {

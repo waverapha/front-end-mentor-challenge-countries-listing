@@ -3,19 +3,20 @@
     @include base-shadow;
     width: 100%;
     margin-bottom: 40px;
-    padding: 7.5px 35px;
+    padding: 3.5px 25px;
     align-items: center;
     background-color: var(--color-secondary);
+    border: 5px double transparent;
     border-radius: 5px;
     color: var(--color-input);
 
     @media (min-width: $app-small-viewport-size) {
         width: 45%;
-        max-width: 400px;
+        max-width: 450px;
         margin-bottom: 0;
     }
 
-    input{
+    .country-search-input{
         margin-left: 20px;
     }
 }

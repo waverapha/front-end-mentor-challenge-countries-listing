@@ -1,11 +1,11 @@
 <template>
-  <a class="theme-switcher bold-600" data-testid="theme-switcher" @click="changeTheme()">
-      <div class="svg-icon">
+  <button class="theme-switcher bold-600" data-testid="theme-switcher" @click="changeTheme()">
+      <div class="svg-icon" role="presentation">
           <moon-o width="1em" v-if="theme === 'light'" />
           <moon width="1em" v-if="theme === 'dark'" />
       </div>
-      <span>Dark Mode</span>
-  </a>
+      <span :aria-label="[`${theme} Mode`]"><span aria-hidden="true">Dark Mode</span></span>
+  </button>
 </template>
 
 <script>

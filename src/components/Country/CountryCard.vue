@@ -11,7 +11,7 @@
     </router-link>
 
     <div class="country-card-content">
-      <h3 class="country-name">{{ country.name }}</h3>
+      <h2 class="country-name">{{ country.name }}</h2>
 
       <ul class="country-information">
         <li class="country-information-item"><span class="country-information-name bold-600">Population:</span> <span class="country-information-value" data-testid="country-information-value">{{ population }}</span></li>
