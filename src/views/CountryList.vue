@@ -6,7 +6,9 @@
       <country-filter></country-filter>
     </div>
 
-    <div class="country-list" data-testid="country-list">
+    <loading data-testid="list-loading" :active="isLoading"></loading>
+
+    <div class="country-list" v-if="!isLoading" data-testid="country-list">
       <country-card
       v-for="country in countries"
       :key="country.numericCode"
@@ -22,20 +24,29 @@
 import CountryCard from '@/components/Country/CountryCard'
 import CountryFilter from '@/components/Country/CountryFilter.vue'
 import CountrySearch from '@/components/Country/CountrySearch.vue'
+import Loading from '@/components/Loading.vue'
 
 export default {
   components: {
     CountryCard,
     CountryFilter,
-    CountrySearch
+    CountrySearch,
+    Loading
+  },
+
+  created(){
+    setInterval(() => {
+      this.isLoading = false;
+    }, 1500)
   },
 
   data(){
     return {
+      isLoading: true,
       countries: Array(50).fill({
         flag: 'https://restcountries.eu/data/bra.svg',
         name: 'Brazil',
-        capital: undefined,
+        capital: 'Brasília',
         population: 206135893,
         region: 'Americas'
       })

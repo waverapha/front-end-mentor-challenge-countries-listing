@@ -1,0 +1,11 @@
+.loading-container{
+    @include flex;
+    justify-content: center;
+    align-items: center;
+    margin: 50px auto;
+    color: var(--primary-color);
+
+    svg{
+        animation: spin 1.5s infinite forwards linear;
+    }
+}

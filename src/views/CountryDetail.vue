@@ -8,6 +8,8 @@
       <span class="back-button-text">Back</span>
     </button>
 
+    <loading data-testid="list-loading" :active="isLoading"></loading>
+
     <div class="country" v-if="!isLoading">
       <div class="country-flag">
         <img :src="country.flag" :alt="`${country.name} Flag`" :title="`${country.name} Flag`">
@@ -54,7 +56,13 @@
 
 <script>
 
+import Loading from '@/components/Loading';
+
 export default {
+
+  components: {
+    Loading
+  },
 
   props: {
     countryName: {
