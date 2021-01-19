@@ -1,0 +1,128 @@
+.country-detail-page{
+    margin-top: 25px;
+    padding: 20px 25px;
+    font-size: $detail-font-size;
+
+        @media (min-width: $app-large-viewport-size){
+            padding: 30px 80px;
+        }
+
+    .back-button{
+        @include base-shadow;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 3px 27.5px;
+        border-radius: 5px;
+        background-color: var(--color-secondary);
+
+        .svg-icon{
+            svg{
+                width: 17.5px;
+            }
+        }
+
+        &-text{
+            margin-left: 10px;
+            font-size: 1em;
+        }
+    }
+
+    .country{
+        @include flex;
+        flex-direction: column;
+        margin-top: 60px;
+
+            @media (min-width: $app-large-viewport-size){
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+        &-flag{
+            text-align: center;
+
+                @media (min-width: $app-large-viewport-size){
+                    width: 40%;
+                }
+        }
+
+        &-details{
+            margin-top: 45px;
+
+                @media (min-width: $app-large-viewport-size){
+                    width: 50%;
+                    margin-top: 0;
+                }
+
+            .country-name{
+                font-size: 1.5em;
+
+                @media (min-width: $app-medium-viewport-size){
+                    font-size: 2em;
+                }
+            }
+
+            &-list-container{
+                @include flex;
+
+                    @media (min-width: $app-large-viewport-size){
+                        justify-content: space-between;
+                        flex-wrap: nowrap;
+                        gap: 15px;
+                    }
+
+                .country-details-list{
+                    width: 100%;
+                    margin: 20px 0;
+    
+                        @media (min-width: $app-large-viewport-size){
+                            max-width: 50%;
+                            width: auto;
+                        }
+    
+                    &:first-of-type{
+                        margin-top: 20px;
+                    }
+    
+                    &-item{
+                        margin: 10px 0;
+                    }
+                }
+            }
+
+            .country-border{
+                @include flex;
+                margin-top: 15px;
+
+                    @media (min-width: $app-large-viewport-size){
+                        flex-wrap: nowrap;
+                        justify-content: space-between;
+                        align-items: center;
+                    }
+
+                &-tag-container{
+                    @include flex;
+                    gap: 15px 10px;
+                    width: 100%;
+                    margin-top: 10px;
+
+                        @media (min-width: $app-large-viewport-size){
+                            width: calc(100% - 150px);
+                            margin-top: 0;
+                        }
+                    
+                    .country-border-tag{
+                        @include base-shadow;
+                        width: 30%;
+                        text-align: center;
+                        padding: 5px 15px;
+                        font-size: 0.75em;
+                        background-color: var(--color-secondary);
+                    }
+                }
+            }
+        }
+    }
+
+}

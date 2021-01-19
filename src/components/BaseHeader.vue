@@ -1,7 +1,9 @@
 <template>
   <header>
       <div class="logo">
-          <h1>Where in the world?</h1>
+          <h1>
+            <router-link :to="{name: 'CountryList'}">Where in the world?</router-link>
+          </h1>
       </div>
 
       <theme-switcher></theme-switcher>

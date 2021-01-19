@@ -58,6 +58,7 @@ ul{
 }
 
 a{
+    color: currentColor;
     text-decoration: none;
     cursor: pointer;
     transition: all 0.2s;
@@ -78,7 +79,6 @@ button, input, textarea{
     &:focus,
     &:active{
         @extend .focused-element;
-        border: 0 !important;
 
         &::placeholder {
             color: var(--color-primary);
@@ -93,15 +93,22 @@ input{
     color: var(--color-input);
     outline: 0;
 
+    &:focus,
+    &:active{
+        border: 0 !important;
+    }
+
     &::placeholder {
         color: var(--color-input-placeholder);
     }
 }
 
 button{
-    padding: 5px;
+    padding: 3px;
+    border: 5px solid transparent;
     background: none;
     transition: all 0.25s;
+    outline: 0;
     @extend .cursor-pointer;
 }
 

@@ -15,10 +15,10 @@ const routes = [
   },
   {
     path: '/country/:country',
-    name: 'country',
+    name: 'CountryDetail',
     component: () => import('../views/CountryDetail.vue'),
     meta: {
-      title: route => route.params.country
+      title: (route) => route.params.country
     },
     props: route => ({
       countryName: route.params.country

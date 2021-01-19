@@ -2,7 +2,7 @@
 
   <div class="country-card" data-testid="country-card">
 
-    <router-link class="country-flag" :to="{ name: 'Detail', params: {country: country.name} }">
+    <router-link class="country-flag" :to="{ name: 'CountryDetail', params: {country: country.name} }">
       <img
       data-testid="country-flag-image"
       :src="country.flag"

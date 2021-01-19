@@ -4,21 +4,26 @@ header{
     
     align-items: center;
     justify-content: space-between;
-    padding: 32px 15px;
+    padding: 20px 15px;
     font-size: $listing-font-size;
     background-color: var(--color-secondary);
 
-    @media (min-width: $app-large-viewport-size){
-        padding: 25px 80px;
-        font-size: $detail-font-size;
-    }
+        @media (min-width: $app-large-viewport-size){
+            padding: 25px 80px;
+            font-size: $detail-font-size;
+        }
 
     .theme-switcher{
         @include flex;
         align-items: center;
+        font-size: 0.9rem;
 
-        svg{
-            margin-right: 10px;
+            @media (min-width: $app-small-viewport-size){
+                font-size: 1rem;
+            }
+
+        &-text{
+            margin-left: 10px;
         }
     }
 }

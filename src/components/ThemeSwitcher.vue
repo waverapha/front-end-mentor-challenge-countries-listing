@@ -4,7 +4,7 @@
           <moon-o width="1em" v-if="theme === 'light'" />
           <moon width="1em" v-if="theme === 'dark'" />
       </div>
-      <span :aria-label="[`${theme} Mode`]"><span aria-hidden="true">Dark Mode</span></span>
+      <span :aria-label="[`${theme} Mode`]"><span class="theme-switcher-text" aria-hidden="true">Dark Mode</span></span>
   </button>
 </template>
 
