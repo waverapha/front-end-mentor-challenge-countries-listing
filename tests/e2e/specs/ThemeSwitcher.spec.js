@@ -13,11 +13,15 @@ describe('Theme Switcher', () => {
     cy.get('@body').should('have.data', 'theme', 'light')
   })
 
-  it('should change theme on click', () => {
+  it('should toggle theme on click', () => {
     cy.get('@body').should('have.data', 'theme', 'light')
 
     cy.get('@theme-switcher').click({force: true})
 
     cy.get('[data-theme="dark"]').should('exist')
+
+    cy.get('@theme-switcher').click({force: true})
+
+    cy.get('[data-theme="light"]').should('exist')
   })
 })

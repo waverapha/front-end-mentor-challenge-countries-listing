@@ -6,7 +6,7 @@
       <country-filter></country-filter>
     </div>
 
-    <loading data-testid="list-loading" :active="isLoading"></loading>
+    <loading data-testid="country-list-loading" :active="isLoading"></loading>
 
     <div class="country-list" v-if="!isLoading" data-testid="country-list">
       <country-card

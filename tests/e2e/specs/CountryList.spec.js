@@ -5,7 +5,7 @@ describe('Countries List', () => {
   beforeEach(() => {
     cy.visit('/');
 
-    cy.get('[data-testid="list-loading"]').as('loading')
+    cy.get('[data-testid="country-list-loading"]').as('loading')
   })
 
   it('list should load and loading component should disappear', () => {

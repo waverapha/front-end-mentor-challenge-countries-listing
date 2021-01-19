@@ -8,9 +8,9 @@
       <span class="back-button-text">Back</span>
     </button>
 
-    <loading data-testid="list-loading" :active="isLoading"></loading>
+    <loading data-testid="country-item-loading" :active="isLoading"></loading>
 
-    <div class="country" v-if="!isLoading">
+    <div class="country" v-if="!isLoading" data-testid="country-item">
       <div class="country-flag">
         <img :src="country.flag" :alt="`${country.name} Flag`" :title="`${country.name} Flag`">
       </div>
@@ -22,11 +22,32 @@
         <div class="country-details-list-container">
 
           <ul class="country-details-list">
-            <li class="country-details-list-item"><span class="bold-600">Native Name:</span> {{ country.nativeName }}</li>
-            <li class="country-details-list-item"><span class="bold-600">Population:</span> {{ population }}</li>
-            <li class="country-details-list-item"><span class="bold-600">Region:</span> {{ country.region || 'No region' }}</li>
-            <li class="country-details-list-item"><span class="bold-600">Sub Region:</span> {{ country.subregion || 'No subregion' }}</li>
-            <li class="country-details-list-item"><span class="bold-600">Capital:</span> {{ country.capital || "Doesn't have a capital" }}</li>
+
+            <li class="country-details-list-item">
+              <span class="bold-600">Native Name: </span>
+              <span>{{ country.nativeName }}</span>
+            </li>
+
+            <li class="country-details-list-item">
+              <span class="bold-600">Population: </span>
+              <span data-testid="country-population">{{ population }}</span>
+            </li>
+
+            <li class="country-details-list-item">
+              <span class="bold-600">Region: </span>
+              <span data-testid="country-region">{{ country.region || 'No region' }}</span>
+            </li>
+
+            <li class="country-details-list-item">
+              <span class="bold-600">Sub Region: </span>
+              <span data-testid="country-subregion">{{ country.subregion || 'No subregion' }}</span>
+            </li>
+
+            <li class="country-details-list-item">
+              <span class="bold-600">Capital: </span>
+              <span data-testid="country-capital">{{ country.capital || "Doesn't have a capital" }}</span>
+            </li>
+
           </ul>
 
           <ul class="country-details-list">
