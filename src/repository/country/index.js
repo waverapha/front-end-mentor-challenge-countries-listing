@@ -2,13 +2,11 @@ import repository from '../repository';
 
 export default {
     all(fields = null){
-        const repositoryPromise = repository.get('/all', {
+        return repository.get('/all', {
             params: {
                 fields
             }
         });
-
-        return repositoryPromise;
     },
 
     byName(name, fields = null){
