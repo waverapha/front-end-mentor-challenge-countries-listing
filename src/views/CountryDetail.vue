@@ -13,7 +13,14 @@
 
     <loading data-testid="country-item-loading" :active="isLoading"></loading>
 
-    <div class="country" v-if="!isLoading" data-testid="country-item">
+    <error-message
+    v-if="!isLoading && !hasCountry"
+    :error-title="error.title"
+    :error-message="error.message"
+    :error-code="error.code">
+    </error-message>
+
+    <div class="country" v-if="!isLoading && hasCountry" data-testid="country-item">
 
       <div class="country-flag">
         <img :src="country.flag" :alt="`${country.name} Flag`" :title="`${country.name} Flag`">
@@ -83,12 +90,14 @@
 
 import Loading from '@/components/Loading';
 
-import { mapActions, mapState } from 'vuex';
+import { mapActions } from 'vuex';
+import ErrorMessage from '@/components/ErrorMessage.vue';
 
 export default {
 
   components: {
-    Loading
+    Loading,
+    ErrorMessage
   },
 
   props: {
@@ -99,15 +108,32 @@ export default {
   },
 
   created(){
+      this.isLoading = true;
+
       this.fetchCountryByName(this.countryName)
-      .then(countryResponse => {
-        const country = countryResponse[0];
-        this.country = (country) ? country : this.country;
+      .then((response) => {
+        this.country = response.data[0];
+      })
+      .catch((error) => {
+        if( error.response.status === 404 ){
+          this.error.message = 'Invalid country name';
+        }
+
+        this.error.code = error.response.status;
+      })
+      .finally(() => {
+        this.isLoading = false;
       });
   },
 
   data(){
     return {
+      error: {
+        title: 'No country here',
+        message: '',
+        code: null,
+      },
+      isLoading: true,
       country: {
         flag: '',
         name: '',
@@ -132,10 +158,6 @@ export default {
 
   computed: {
 
-    ...mapState('country', [
-      'isLoading'
-    ]),
-
     topLevelDomains(){
       return this.country.topLevelDomain.join(', ')
     },
@@ -155,6 +177,10 @@ export default {
     hasBorders(){
       return this.country.borders.length > 0
     },
+
+    hasCountry(){
+      return this.country.name.length > 0
+    }
   }
 }
 </script>

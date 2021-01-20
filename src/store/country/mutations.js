@@ -9,3 +9,7 @@ export function SET_LOADING_STATE(state, isLoading){
 export function SET_REGION_FILTER(state, region){
     state.filter.region = region;
 }
+
+export function SET_ERROR(state, error){
+    state.error = error;
+}

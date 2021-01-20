@@ -1,10 +1,7 @@
-export function fetchCountries({ commit }){
-    commit('SET_LOADING_STATE', true);
+import http from '../../repository/country'
 
-    const apiURL = 'https://restcountries.eu/rest/v2';
+export const fetchCountries = async ({ commit }) => {
 
-    const endpoint = 'all';
-    
     const fields = [
         'name',
         'nativeName',
@@ -20,24 +17,23 @@ export function fetchCountries({ commit }){
         'alpha3Code',
     ].join(';');
 
-    fetch(`${apiURL}/${endpoint}?fields=${fields}`)
-    .then(response => response.json())
-    .then(countries => {
-        commit('SET_COUNTRIES', countries);
-    })
-    .catch(error => console.error(error))
-    .finally(() => {
-        commit('SET_LOADING_STATE', false);
-    });
-}
-
-export const fetchCountryByName = async({ commit }, countryName) => {
     commit('SET_LOADING_STATE', true);
 
-    const apiURL = 'https://restcountries.eu/rest/v2';
-    
-    const endpoint = `name/${countryName}`;
-    
+    try{
+        const response = await http.all(fields);
+
+        commit('SET_COUNTRIES', response.data);
+    } catch(error){
+        commit('SET_ERROR', {
+            message: error.message,
+            code: error.response.status
+        });
+    }
+
+    commit('SET_LOADING_STATE', false);
+}
+
+export const fetchCountryByName = async(context, countryName) => {
     const fields = [
         'name',
         'nativeName',
@@ -53,11 +49,7 @@ export const fetchCountryByName = async({ commit }, countryName) => {
         'alpha3Code'
     ].join(';');
 
-    const result = await fetch(`${apiURL}/${endpoint}/?fullText=true&fields=${fields}`)
-    .then((response) => response.json());
-    
-    commit('SET_LOADING_STATE', false);
-    return result;
+    return await http.byName(countryName, fields);
 };
 
 export function filterByRegion({ commit, state }, region){

@@ -8,7 +8,12 @@
 
     <loading data-testid="country-list-loading" :active="isLoading"></loading>
 
-    <h2 class="no-countries-list" v-if="!isLoading && !hasCountries">No countries here :(</h2>
+    <error-message
+    v-if="!isLoading && !hasCountries"
+    error-title="No countries here!"
+    :error-message="error.message"
+    :error-code="error.code">
+    </error-message>
 
     <div class="country-list" v-if="!isLoading && hasCountries" data-testid="country-list">
       <country-card
@@ -27,6 +32,7 @@ import CountryCard from '@/components/Country/CountryCard'
 import CountryFilterByRegion from '@/components/Country/CountryFilterByRegion.vue'
 import CountryFilterByName from '@/components/Country/CountryFilterByName.vue'
 import Loading from '@/components/Loading.vue'
+import ErrorMessage from '@/components/ErrorMessage.vue'
 
 import { mapFields } from 'vuex-map-fields'
 import { mapActions, mapGetters } from 'vuex'
@@ -36,7 +42,8 @@ export default {
     CountryCard,
     CountryFilterByRegion,
     CountryFilterByName,
-    Loading
+    Loading,
+    ErrorMessage
   },
 
   created(){
@@ -51,7 +58,8 @@ export default {
 
   computed: {
     ...mapFields('country', [
-      'isLoading'
+      'isLoading',
+      'error'
     ]),
 
     ...mapGetters('country', [

@@ -1,0 +1,53 @@
+.error-card{
+    @include base-shadow;
+    display: flex;
+    align-items: center;
+    max-width: 450px;
+    margin: 20px auto;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 1em;
+    text-align: center;
+    background: var(--color-secondary);
+
+    .error-panel{
+        @include flex;
+        justify-content: center;
+        align-items: center;
+
+        &.nowrap{
+        flex-wrap: nowrap;
+        }
+
+        &.error-color{
+        color: var(--color-error);
+        }
+    }
+
+    .icon{
+        font-size: 1.75em;
+    }
+
+    .code{
+        font-size: 1.25em;
+        margin-left: 10px;
+    }
+
+    .error-text{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+        padding: 0 15px;
+        text-align: center;
+
+        .title{
+            font-size: 1.25em;
+            color: var(--color-error);
+        }
+
+        .message{
+            margin-top: 10px;
+        }
+    }
+}

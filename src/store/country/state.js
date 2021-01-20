@@ -1,6 +1,10 @@
 export default function(){
     return {
         isLoading: true,
+        error: {
+          message: '',
+          code: null
+        },
         countries: [],
         filter: {
           term: '',
