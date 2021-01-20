@@ -87,9 +87,25 @@ export default {
     data(){
       return {
         activeList: false,
-        arrowKeys: [
-          38, 40
-        ],
+        allowedKeysToIntercept: {
+          ArrowUp: () => {
+            const next = this.index - 1;
+
+            return (next < 0) ? 0 : next;
+          },
+          ArrowDown: () => {
+            const next = this.index + 1;
+            const listSize = this.list.length - 1;
+
+            return (next > listSize) ? listSize : next;
+          },
+          Home: () => {
+            return 0;
+          },
+          End: () => {
+            return this.list.length - 1;
+          },
+        },
         list: null,
         index: 0,
       }
@@ -116,28 +132,19 @@ export default {
         this.$el.removeEventListener('keydown', keydownHandlerEvent, false);
       },
 
-      keydownHandler(){
-        if( this.arrowKeys.includes(event.keyCode) ){
-          event.preventDefault();
-          event.stopPropagation();
-
-          let index = this.index;
-
-          if( event.keyCode === 38 ){
-            const next = index - 1;
-
-            index = (next < 0) ? 0 : next;
-          }
-
-          if( event.keyCode === 40 ){
-            const next = index + 1;
-            const listSize = this.list.length -1;
-
-            index = (next > listSize) ? listSize : next;
-          }
-
-          this.putFocusInOption(index);
+      keydownHandler(event){
+        if( !this.allowedKeysToIntercept[event.key] ){
+          return;
         }
+        
+        event.preventDefault();
+        event.stopPropagation();
+
+        const moveFocus = this.allowedKeysToIntercept[event.key];
+
+        const index = moveFocus();
+
+        this.putFocusInOption(index);
       },
 
       putFocusInOption(index){
