@@ -3,27 +3,27 @@
 
     <button
     class="base-select-list-trigger"
-    @click.stop="activeList = !activeList"
+    @click.stop="openSelect()"
     aria-controls="base-select"
     aria-haspopup="listbox"
     :aria-expanded="[activeList]">
-      <span class="list-trigger-text">{{ valueText }}</span>
+      <span class="list-trigger-text">{{ selected.name }}</span>
       <div class="svg-icon" role="presentation">
-        <chevron-down
-        width="1em" />
+        <chevron-down />
       </div>
     </button>
 
     <ul
     id="base-select"
     class="base-select-list"
-    :class="baseSelectListClass"
+    :class="[baseSelectListClass]"
     role="listbox"
     :aria-hidden="[activeList]"
     tabindex="-1"
-    :aria-label="valueText">
+    :aria-label="`${selected.name} / Use TAB to navigate`">
 
       <li
+      :tabindex="(activeList) ? 0 : -1"
       class="base-select-list-item"
       :class="listOptionClass"
       v-for="option in selectOptions"
@@ -42,6 +42,12 @@
 <script>
 export default {
     props: {
+        selected: {
+          type: Object,
+          default(){
+            return this.noOptionItem
+          }
+        },
         options: {
           type: Array,
           required: true
@@ -54,9 +60,14 @@ export default {
           type: String,
           default: ''
         },
-        triggerButtonText: {
-          type: String,
-          default: 'Choose an option'
+        noOptionItem: {
+          type: Object,
+          default(){
+            return {
+              id: null,
+              name: 'Choose an option'
+            }
+          }
         },
         hasDefaultOption: {
           type: Boolean,
@@ -72,14 +83,16 @@ export default {
 
     data(){
       return {
-        value: null,
         activeList: false,
       }
     },
 
     methods: {
+      openSelect(){
+        this.activeList = !this.activeList;
+      },
+
       changeChoosedOption(option){
-        this.value = option;
         this.activeList = false;
         this.$emit('change', option);
       },
@@ -87,16 +100,10 @@ export default {
 
     computed: {
       selectOptions(){
-        const defaultOption = {id: null, name: this.triggerButtonText};
-
         return ( this.hasDefaultOption ) ? [
-          defaultOption,
+          this.noOptionItem,
           ...this.options
         ] : this.options
-      },
-
-      valueText(){
-        return (this.value) ? this.value.name : null || this.triggerButtonText
       },
 
       baseSelectListClass(){
@@ -104,7 +111,7 @@ export default {
           [this.listClass]: true,
           active: this.activeList
         }
-      }
+      },
     }
 }
 </script>

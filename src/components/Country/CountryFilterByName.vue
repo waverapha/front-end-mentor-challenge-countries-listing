@@ -16,17 +16,28 @@
       placeholder="Search for a country..."
       @focus="isFocused = true"
       @blur="isFocused = false"
-      aria-label="Type to search for a country">
+      aria-label="Type to search for a country"
+      v-model="term">
 
   </div>
 </template>
 
 <script>
+
+import { mapFields } from 'vuex-map-fields'
+
 export default {
+
   data(){
     return {
       isFocused: false
     }
   },
+
+  computed: {
+    ...mapFields('country', [
+      'filter.term'
+    ])
+  }
 }
 </script>

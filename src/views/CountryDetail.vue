@@ -2,15 +2,19 @@
   <div class="country-detail-page">
     
     <button class="back-button" @click="$router.back()">
+      
       <div class="svg-icon" rel="presentation">
-        <LongArrowLeft />
+        <long-arrow-left />
       </div>
+
       <span class="back-button-text">Back</span>
+
     </button>
 
     <loading data-testid="country-item-loading" :active="isLoading"></loading>
 
     <div class="country" v-if="!isLoading" data-testid="country-item">
+
       <div class="country-flag">
         <img :src="country.flag" :alt="`${country.name} Flag`" :title="`${country.name} Flag`">
       </div>
@@ -79,6 +83,8 @@
 
 import Loading from '@/components/Loading';
 
+import { mapActions, mapState } from 'vuex';
+
 export default {
 
   components: {
@@ -93,24 +99,11 @@ export default {
   },
 
   created(){
-    this.isLoading = true;
-
-    const apiURL = 'https://restcountries.eu/rest/v2';
-
-    const fields = this.apiFields.join(';');
-
-    const countryFetch = fetch(`${apiURL}/name/${this.countryName}?fields=${fields}`);
-
-    this.country = countryFetch.then((response) => response.json())
-    .then((country) => {
-      this.country = country[0];
-    })
-    .catch((error) => {
-      console.error(error);
-    })
-    .finally(() => {
-      this.isLoading = false;
-    });
+      this.fetchCountryByName(this.countryName)
+      .then(countryResponse => {
+        const country = countryResponse[0];
+        this.country = (country) ? country : this.country;
+      });
   },
 
   data(){
@@ -127,25 +120,21 @@ export default {
         currencies: [],
         languages: [],
         borders: [],
-      },
-      isLoading: true,
-      apiFields: [
-        'name',
-        'nativeName',
-        'region',
-        'subregion',
-        'capital',
-        'flag',
-        'population',
-        'topLevelDomain',
-        'borders',
-        'currencies',
-        'languages',
-      ]
+      }
     }
   },
 
+  methods: {
+    ...mapActions('country', [
+      'fetchCountryByName'
+    ]),
+  },
+
   computed: {
+
+    ...mapState('country', [
+      'isLoading'
+    ]),
 
     topLevelDomains(){
       return this.country.topLevelDomain.join(', ')
