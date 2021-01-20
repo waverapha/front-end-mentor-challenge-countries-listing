@@ -9,6 +9,7 @@
     --color-input: #{$color-light-grey};
     --color-input-placeholder: #{$color-light-grey};
     --color-base-shadow: #{$color-light-base-shadow};
+    --color-error: #{$color-error};
 }
 
 *{
@@ -119,6 +120,7 @@ img{
 
 svg{
     fill: currentColor;
+    width: 1em;
 }
 
 .bold-600{

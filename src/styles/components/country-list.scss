@@ -1,3 +1,12 @@
+.country-listing-page{
+    .no-countries-list{
+        margin: 50px 0 25px 0;
+        font-size: 2em;
+        text-align: center;
+        color: var(--color-text);
+    }
+}
+
 .country-list{
     display: grid;
     grid-template-columns: auto;
@@ -8,15 +17,15 @@
         @media (min-width: $app-small-viewport-size){
             padding: 0;
             grid-gap: 70px;
-            grid-template-columns: repeat(2, auto);
+            grid-template-columns: repeat(2, 1fr);
         }
 
         @media (min-width: $app-medium-viewport-size){
-            grid-template-columns: repeat(3, auto);
+            grid-template-columns: repeat(3, 1fr);
         }
     
         @media (min-width: $app-large-viewport-size){
-            grid-template-columns: repeat(4, auto);
+            grid-template-columns: repeat(4, 1fr);
         }
 
     .country-card{

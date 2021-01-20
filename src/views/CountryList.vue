@@ -2,15 +2,22 @@
   <main class="country-listing-page">
 
     <div class="search-and-filter-bar">
-      <country-search></country-search>
-      <country-filter></country-filter>
+      <country-filter-by-name></country-filter-by-name>
+      <country-filter-by-region></country-filter-by-region>
     </div>
 
     <loading data-testid="country-list-loading" :active="isLoading"></loading>
 
-    <div class="country-list" v-if="!isLoading" data-testid="country-list">
+    <error-message
+    v-if="!isLoading && !hasCountries"
+    error-title="No countries here!"
+    :error-message="error.message"
+    :error-code="error.code">
+    </error-message>
+
+    <div class="country-list" v-if="!isLoading && hasCountries" data-testid="country-list">
       <country-card
-      v-for="country in countries"
+      v-for="country in filteredCountries"
       :key="country.numericCode"
       :country="country"
       />
@@ -22,35 +29,43 @@
 <script>
 
 import CountryCard from '@/components/Country/CountryCard'
-import CountryFilter from '@/components/Country/CountryFilter.vue'
-import CountrySearch from '@/components/Country/CountrySearch.vue'
+import CountryFilterByRegion from '@/components/Country/CountryFilterByRegion.vue'
+import CountryFilterByName from '@/components/Country/CountryFilterByName.vue'
 import Loading from '@/components/Loading.vue'
+import ErrorMessage from '@/components/ErrorMessage.vue'
+
+import { mapFields } from 'vuex-map-fields'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   components: {
     CountryCard,
-    CountryFilter,
-    CountrySearch,
-    Loading
+    CountryFilterByRegion,
+    CountryFilterByName,
+    Loading,
+    ErrorMessage
   },
 
   created(){
-    setInterval(() => {
-      this.isLoading = false;
-    }, 1500)
+    this.fetchCountries();
   },
 
-  data(){
-    return {
-      isLoading: true,
-      countries: Array(50).fill({
-        flag: 'https://restcountries.eu/data/bra.svg',
-        name: 'Brazil',
-        capital: 'Brasília',
-        population: 206135893,
-        region: 'Americas'
-      })
-    }
+  methods: {
+    ...mapActions('country', [
+      'fetchCountries'
+    ])
+  },
+
+  computed: {
+    ...mapFields('country', [
+      'isLoading',
+      'error'
+    ]),
+
+    ...mapGetters('country', [
+      'filteredCountries',
+      'hasCountries'
+    ])
   }
 }
 </script>

@@ -2,15 +2,26 @@
   <div class="country-detail-page">
     
     <button class="back-button" @click="$router.back()">
+      
       <div class="svg-icon" rel="presentation">
-        <LongArrowLeft />
+        <long-arrow-left />
       </div>
+
       <span class="back-button-text">Back</span>
+
     </button>
 
     <loading data-testid="country-item-loading" :active="isLoading"></loading>
 
-    <div class="country" v-if="!isLoading" data-testid="country-item">
+    <error-message
+    v-if="!isLoading && !hasCountry"
+    :error-title="error.title"
+    :error-message="error.message"
+    :error-code="error.code">
+    </error-message>
+
+    <div class="country" v-if="!isLoading && hasCountry" data-testid="country-item">
+
       <div class="country-flag">
         <img :src="country.flag" :alt="`${country.name} Flag`" :title="`${country.name} Flag`">
       </div>
@@ -79,10 +90,14 @@
 
 import Loading from '@/components/Loading';
 
+import { mapActions } from 'vuex';
+import ErrorMessage from '@/components/ErrorMessage.vue';
+
 export default {
 
   components: {
-    Loading
+    Loading,
+    ErrorMessage
   },
 
   props: {
@@ -93,28 +108,32 @@ export default {
   },
 
   created(){
-    this.isLoading = true;
+      this.isLoading = true;
 
-    const apiURL = 'https://restcountries.eu/rest/v2';
+      this.fetchCountryByName(this.countryName)
+      .then((response) => {
+        this.country = response.data[0];
+      })
+      .catch((error) => {
+        if( error.response.status === 404 ){
+          this.error.message = 'Invalid country name';
+        }
 
-    const fields = this.apiFields.join(';');
-
-    const countryFetch = fetch(`${apiURL}/name/${this.countryName}?fields=${fields}`);
-
-    this.country = countryFetch.then((response) => response.json())
-    .then((country) => {
-      this.country = country[0];
-    })
-    .catch((error) => {
-      console.error(error);
-    })
-    .finally(() => {
-      this.isLoading = false;
-    });
+        this.error.code = error.response.status;
+      })
+      .finally(() => {
+        this.isLoading = false;
+      });
   },
 
   data(){
     return {
+      error: {
+        title: 'No country here',
+        message: '',
+        code: null,
+      },
+      isLoading: true,
       country: {
         flag: '',
         name: '',
@@ -127,22 +146,14 @@ export default {
         currencies: [],
         languages: [],
         borders: [],
-      },
-      isLoading: true,
-      apiFields: [
-        'name',
-        'nativeName',
-        'region',
-        'subregion',
-        'capital',
-        'flag',
-        'population',
-        'topLevelDomain',
-        'borders',
-        'currencies',
-        'languages',
-      ]
+      }
     }
+  },
+
+  methods: {
+    ...mapActions('country', [
+      'fetchCountryByName'
+    ]),
   },
 
   computed: {
@@ -166,6 +177,10 @@ export default {
     hasBorders(){
       return this.country.borders.length > 0
     },
+
+    hasCountry(){
+      return this.country.name.length > 0
+    }
   }
 }
 </script>

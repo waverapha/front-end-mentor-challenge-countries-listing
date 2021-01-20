@@ -16,12 +16,6 @@
         border-radius: 5px;
         background-color: var(--color-secondary);
 
-        .svg-icon{
-            svg{
-                width: 17.5px;
-            }
-        }
-
         &-text{
             margin-left: 10px;
             font-size: 1em;
@@ -41,6 +35,10 @@
 
         &-flag{
             text-align: center;
+
+            img{
+                @include base-shadow;
+            }
 
                 @media (min-width: $app-large-viewport-size){
                     width: 40%;
