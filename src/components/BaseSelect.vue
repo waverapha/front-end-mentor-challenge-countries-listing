@@ -20,14 +20,15 @@
     role="listbox"
     :aria-hidden="[activeList]"
     tabindex="-1"
-    :aria-label="`${selected.name} / Use TAB to navigate`">
+    :aria-label="`${selected.name}`">
 
       <li
       class="base-select-list-item"
       :class="listOptionClass"
       v-for="option in selectOptions"
       :key="option.id"
-      role="option">
+      role="option"
+      :aria-selected="selected.id === option.id">
         <a
         :tabindex="(activeList) ? 0 : -1"
         class="base-select-list-item-changer"
