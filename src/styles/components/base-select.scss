@@ -45,12 +45,19 @@
             }
 
             &:hover{
-                color: $color-light-grey;
+                color: var(--color-grey);
             }
 
             &-changer{
                 display: inline-block;
                 width: 100%;
+                padding: 2.5px;
+
+                &:focus,
+                &:active{
+                    outline: 0;
+                    color: var(--color-grey);
+                }
             }
         }
     }

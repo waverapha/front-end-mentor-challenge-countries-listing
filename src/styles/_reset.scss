@@ -30,7 +30,7 @@ body{
     &[data-theme="dark"]{
         --color-primary: #{$color-dark-primary};
         --color-secondary: #{$color-dark-secondary};
-        --color-grey: #{$color-dark-text};
+        --color-grey: #{$color-dark-grey};
         --color-text: #{$color-dark-text};
         --color-input: #{$color-dark-text};
         --color-input-placeholder: #{$color-dark-text};
