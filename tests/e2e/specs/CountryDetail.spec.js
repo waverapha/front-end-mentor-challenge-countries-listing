@@ -3,13 +3,17 @@
 
 describe('CountryDetail', () => {
     beforeEach(() => {
-        cy.visit('/country/Palau')
+        const country = 'Brazil'
+
+        cy.visit(`/country/${country}`)
 
         cy.get('[data-testid="country-item-loading"]').as('loading')
     })
 
-    it('country item should load and loading component should disappear', () => {
-        cy.get('@loading').should('exist').and('be.visible')
+    it('should load country item and loading component should disappear', () => {
+        cy.get('@loading')
+        .should('exist')
+        .and('be.visible')
 
         cy.get('[data-testid="country-item"]').as('country-item')
         .should('exist')
@@ -41,4 +45,30 @@ describe('CountryDetail', () => {
 
         cy.get('@loading').should('not.exist')
     });
+
+    describe('Errors', () => {
+        beforeEach(() => {
+            cy.visit('/country/Brazila')
+    
+            cy.get('[data-testid="country-item-loading"]').as('loading')
+        })
+
+        it('should not load if param is not a valid country', () => {
+            cy.get('@loading')
+            .should('exist')
+            .and('be.visible')
+
+            cy.get('[data-testid="error-card"]')
+            .should('exist')
+            .and('be.visible')
+            .and('contain.text', '404')
+            .and('contain.text', 'Invalid country name')
+    
+            cy.get('[data-testid="country-card"]')
+            .should('not.exist')
+    
+            cy.get('@loading')
+            .should('not.exist')
+        });
+    })
 })

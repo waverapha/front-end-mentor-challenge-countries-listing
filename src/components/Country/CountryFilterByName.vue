@@ -17,7 +17,8 @@
       @focus="isFocused = true"
       @blur="isFocused = false"
       aria-label="Type to search for a country"
-      v-model="term">
+      v-model="term"
+      data-testid="filter-by-name">
 
   </div>
 </template>

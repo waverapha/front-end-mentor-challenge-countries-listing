@@ -1,6 +1,6 @@
 <template>
 
-  <div class="error-card">
+  <div class="error-card" data-testid="error-card">
     <div class="error-panel nowrap error-color">
       <div class="icon svg-icon">
         <notification />
@@ -9,8 +9,8 @@
     </div>
 
     <div class="error-panel error-text">
-      <span class="title">{{ errorTitle }}</span>
-      <small class="message" v-if="errorMessage">{{ errorMessage }}</small>
+      <span class="title" data-testid="error-title">{{ errorTitle }}</span>
+      <small class="message" v-if="errorMessage" data-testid="error-message">{{ errorMessage }}</small>
     </div>
 
   </div>
