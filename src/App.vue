@@ -6,11 +6,22 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import BaseHeader from './components/BaseHeader.vue'
 
 export default {
   components: {
     BaseHeader
+  },
+
+  created(){
+    this.loadTheme();
+  },
+
+  methods: {
+    ...mapActions('preferences', [
+      'loadTheme'
+    ])
   }
 }
 </script>

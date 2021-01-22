@@ -17,7 +17,6 @@
     padding: 0;
     border: 0;
     box-sizing: border-box;
-    transition: background-color 0.25s, color, fill;
 }
 
 body{
@@ -121,6 +120,7 @@ img{
 svg{
     fill: currentColor;
     width: 1em;
+    transition: fill 0.1s;
 }
 
 .bold-600{
