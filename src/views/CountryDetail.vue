@@ -113,33 +113,29 @@ export default {
   },
 
   async created(){
-      try{
-        this.isLoading.country = true;
-        this.isLoading.borders = true;
+    this.isLoading.country = true;
+    this.isLoading.borders = true;
 
-        await this.fetchCountryByName(this.countryName)
-        .then((response) => {
-          this.country = response.data[0];
+    try{
+      const countryResponse = await this.fetchCountryByName(this.countryName);
 
-          this.isLoading.country = false;
-        });
+      this.country = countryResponse.data[0];
 
-        await this.fetchCountriesByAlpha3Code(this.country.borders)
-        .then((response) => {
-          this.countryBorders = response.data.map((country) => country.name);
-          this.isLoading.borders = false;
-        })
-      }
-      catch(error){
-        if( error.response.status === 404 ){
-          this.error.message = 'Invalid country name';
-        }
-
-        this.error.code = error.response.status;
-
-        this.isLoading.country = false;
+      if( this.country.borders.length > 0 ){
+        const countryBorderNamesResponse = await this.fetchCountriesByAlpha3Code(this.country.borders)
+        this.countryBorders = countryBorderNamesResponse.data.map((country) => country.name);
         this.isLoading.borders = false;
       }
+    }
+    catch(error){
+      if( error.response.status === 404 ){
+        this.error.message = 'Invalid country name';
+      }
+
+      this.error.code = error.response.status;
+    }finally{
+      this.isLoading.country = false;
+    }
   },
 
   data(){
