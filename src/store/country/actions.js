@@ -52,6 +52,16 @@ export const fetchCountryByName = async(context, countryName) => {
     return await http.byName(countryName, fields);
 };
 
+export const fetchCountriesByAlpha3Code = async(context, alpha3Codes) => {
+    const fields = [
+        'name'
+    ].join(';');
+
+    alpha3Codes = alpha3Codes.join(';');
+
+    return await http.manyByAlpha3Code(alpha3Codes, fields);
+};
+
 export function filterByRegion({ commit, state }, region){
     const isSameRegion = region.name === state.filter.region.name;
 
