@@ -79,9 +79,12 @@
           data-testid="country-item-loading"></loading>
 
           <div class="country-border-tag-container" v-if="hasBorders">
-            <div class="country-border-tag"
+            <router-link class="country-border-tag cursor-pointer"
             v-for="borderCountry in countryBorders"
-            :key="borderCountry">{{ borderCountry }}</div>
+            :key="borderCountry"
+            :to="{ name: 'CountryDetail', params: {country: borderCountry} }">
+              {{ borderCountry }}
+            </router-link>
           </div>
 
         </div>
@@ -112,30 +115,8 @@ export default {
     }
   },
 
-  async created(){
-    this.isLoading.country = true;
-    this.isLoading.borders = true;
-
-    try{
-      const countryResponse = await this.fetchCountryByName(this.countryName);
-
-      this.country = countryResponse.data[0];
-
-      if( this.country.borders.length > 0 ){
-        const countryBorderNamesResponse = await this.fetchCountriesByAlpha3Code(this.country.borders)
-        this.countryBorders = countryBorderNamesResponse.data.map((country) => country.name);
-        this.isLoading.borders = false;
-      }
-    }
-    catch(error){
-      if( error.response.status === 404 ){
-        this.error.message = 'Invalid country name';
-      }
-
-      this.error.code = error.response.status;
-    }finally{
-      this.isLoading.country = false;
-    }
+  created(){
+    this.fetchCountry();
   },
 
   data(){
@@ -172,6 +153,32 @@ export default {
       'fetchCountryByName',
       'fetchCountriesByAlpha3Code'
     ]),
+
+    async fetchCountry(){
+      this.isLoading.country = true;
+      this.isLoading.borders = true;
+
+      try{
+        const countryResponse = await this.fetchCountryByName(this.countryName);
+
+        this.country = countryResponse.data[0];
+
+        if( this.country.borders.length > 0 ){
+          const countryBorderNamesResponse = await this.fetchCountriesByAlpha3Code(this.country.borders)
+          this.countryBorders = countryBorderNamesResponse.data.map((country) => country.name);
+          this.isLoading.borders = false;
+        }
+      }
+      catch(error){
+        if( error.response.status === 404 ){
+          this.error.message = 'Invalid country name';
+        }
+
+        this.error.code = error.response.status;
+      }finally{
+        this.isLoading.country = false;
+      }
+    }
   },
 
   computed: {
@@ -203,6 +210,12 @@ export default {
     hasError(){
       return this.country.name.length <= 0 && !this.isLoading.country
     }
-  }
+  },
+
+  beforeRouteUpdate (to, from, next) {
+    this.country = to.params.country;
+    
+    next();
+  },
 }
 </script>
