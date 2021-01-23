@@ -17,4 +17,13 @@ export default {
             }
         });
     },
+
+    manyByAlpha3Code(alpha3Codes, fields = null){
+        return repository.get('/alpha', {
+            params: {
+                codes: alpha3Codes,
+                fields
+            }
+        });
+    },
 }

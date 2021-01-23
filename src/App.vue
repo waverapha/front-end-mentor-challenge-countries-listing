@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <base-header />
-    <router-view/>
+    <router-view :key="$route.fullPath" />
   </div>
 </template>
 
@@ -21,7 +21,7 @@ export default {
   methods: {
     ...mapActions('preferences', [
       'loadTheme'
-    ])
+    ]),
   }
 }
 </script>

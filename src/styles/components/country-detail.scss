@@ -111,11 +111,14 @@
                         }
                     
                     .country-border-tag{
+                        @include flex;
                         @include base-shadow;
+                        align-items: center;
+                        justify-content: center;
                         width: 30%;
-                        text-align: center;
                         padding: 5px 15px;
                         font-size: 0.75em;
+                        text-align: center;
                         background-color: var(--color-secondary);
                     }
                 }

@@ -11,16 +11,16 @@
 
     </button>
 
-    <loading data-testid="country-item-loading" :active="isLoading"></loading>
+    <loading data-testid="country-item-loading" :active="isLoading.country"></loading>
 
     <error-message
-    v-if="!isLoading && !hasCountry"
+    v-if="hasError"
     :error-title="error.title"
     :error-message="error.message"
     :error-code="error.code">
     </error-message>
 
-    <div class="country" v-if="!isLoading && hasCountry" data-testid="country-item">
+    <div class="country" v-if="hasCountry" data-testid="country-item">
 
       <div class="country-flag">
         <img :src="country.flag" :alt="`${country.name} Flag`" :title="`${country.name} Flag`">
@@ -69,14 +69,26 @@
 
         </div>
 
-        <div class="country-border">
+        <div class="country-border"
+        data-testid="country-border">
 
-          <h3 class="bold-600">Border Countries: <span v-if="!hasBorders">No borders</span></h3>
+          <h3 class="bold-600">Border Countries: 
+            <span
+            v-if="!hasBorders">No borders</span>
+          </h3>
 
-          <div class="country-border-tag-container" v-if="hasBorders">
-            <div class="country-border-tag"
-            v-for="borderCountry in country.borders"
-            :key="borderCountry">{{ borderCountry }}</div>
+          <loading
+          size="small"
+          :active="isLoading.borders"
+          data-testid="country-item-loading"></loading>
+
+          <div class="country-border-tag-container"
+          v-if="hasBorders">
+            <router-link class="country-border-tag cursor-pointer"
+            v-for="borderCountry in countryBorders"
+            :key="borderCountry"
+            :to="{ name: 'CountryDetail', params: {country: borderCountry} }"
+            data-testid="country-border-tag">{{ borderCountry }}</router-link>
           </div>
 
         </div>
@@ -108,22 +120,7 @@ export default {
   },
 
   created(){
-      this.isLoading = true;
-
-      this.fetchCountryByName(this.countryName)
-      .then((response) => {
-        this.country = response.data[0];
-      })
-      .catch((error) => {
-        if( error.response.status === 404 ){
-          this.error.message = 'Invalid country name';
-        }
-
-        this.error.code = error.response.status;
-      })
-      .finally(() => {
-        this.isLoading = false;
-      });
+    this.fetchCountry();
   },
 
   data(){
@@ -133,7 +130,11 @@ export default {
         message: '',
         code: null,
       },
-      isLoading: true,
+
+      isLoading: {
+        country: true,
+        borders: true,
+      },
       country: {
         flag: '',
         name: '',
@@ -146,14 +147,42 @@ export default {
         currencies: [],
         languages: [],
         borders: [],
-      }
+      },
+      countryBorders: []
     }
   },
 
   methods: {
     ...mapActions('country', [
-      'fetchCountryByName'
+      'fetchCountryByName',
+      'fetchCountriesByAlpha3Code'
     ]),
+
+    async fetchCountry(){
+      this.isLoading.country = true;
+
+      try{
+        const countryResponse = await this.fetchCountryByName(this.countryName);
+
+        this.country = countryResponse.data[0];
+
+        if( this.country.borders.length > 0 ){
+          this.isLoading.borders = true;
+          const countryBorderNamesResponse = await this.fetchCountriesByAlpha3Code(this.country.borders)
+          this.countryBorders = countryBorderNamesResponse.data.map((country) => country.name);
+        }
+      }
+      catch(error){
+        if( error.response.status === 404 ){
+          this.error.message = 'Invalid country name';
+        }
+
+        this.error.code = error.response.status;
+      }finally{
+        this.isLoading.country = false;
+        this.isLoading.borders = false;
+      }
+    }
   },
 
   computed: {
@@ -175,12 +204,22 @@ export default {
     },
 
     hasBorders(){
-      return this.country.borders.length > 0
+      return this.countryBorders.length > 0 && !this.isLoading.borders
     },
 
     hasCountry(){
-      return this.country.name.length > 0
+      return this.country.name.length > 0 && !this.isLoading.country
+    },
+
+    hasError(){
+      return this.country.name.length <= 0 && !this.isLoading.country
     }
-  }
+  },
+
+  beforeRouteUpdate (to, from, next) {
+    this.country = to.params.country;
+    
+    next();
+  },
 }
 </script>
