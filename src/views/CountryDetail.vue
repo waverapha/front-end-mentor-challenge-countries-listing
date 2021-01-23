@@ -69,22 +69,26 @@
 
         </div>
 
-        <div class="country-border">
+        <div class="country-border"
+        data-testid="country-border">
 
-          <h3 class="bold-600">Border Countries: <span v-if="!hasBorders && !isLoading.borders">No borders</span></h3>
+          <h3 class="bold-600">Border Countries: 
+            <span
+            v-if="!hasBorders">No borders</span>
+          </h3>
 
           <loading
           size="small"
           :active="isLoading.borders"
           data-testid="country-item-loading"></loading>
 
-          <div class="country-border-tag-container" v-if="hasBorders">
+          <div class="country-border-tag-container"
+          v-if="hasBorders">
             <router-link class="country-border-tag cursor-pointer"
             v-for="borderCountry in countryBorders"
             :key="borderCountry"
-            :to="{ name: 'CountryDetail', params: {country: borderCountry} }">
-              {{ borderCountry }}
-            </router-link>
+            :to="{ name: 'CountryDetail', params: {country: borderCountry} }"
+            data-testid="country-border-tag">{{ borderCountry }}</router-link>
           </div>
 
         </div>
@@ -156,7 +160,6 @@ export default {
 
     async fetchCountry(){
       this.isLoading.country = true;
-      this.isLoading.borders = true;
 
       try{
         const countryResponse = await this.fetchCountryByName(this.countryName);
@@ -164,9 +167,9 @@ export default {
         this.country = countryResponse.data[0];
 
         if( this.country.borders.length > 0 ){
+          this.isLoading.borders = true;
           const countryBorderNamesResponse = await this.fetchCountriesByAlpha3Code(this.country.borders)
           this.countryBorders = countryBorderNamesResponse.data.map((country) => country.name);
-          this.isLoading.borders = false;
         }
       }
       catch(error){
@@ -177,6 +180,7 @@ export default {
         this.error.code = error.response.status;
       }finally{
         this.isLoading.country = false;
+        this.isLoading.borders = false;
       }
     }
   },
