@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-const apiVersion = 'v2';
+const apiVersion = 'v3.1';
 
-const baseURL = `https://restcountries.eu/rest/${apiVersion}`;
+const baseURL = `https://restcountries.com/${apiVersion}`;
 
 export default axios.create({
-    baseURL
+  baseURL
 })

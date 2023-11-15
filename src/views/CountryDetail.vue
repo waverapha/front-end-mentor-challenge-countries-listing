@@ -2,33 +2,31 @@
   <div class="country-detail-page">
     
     <button class="back-button" @click="$router.back()">
-      
       <div class="svg-icon" rel="presentation">
         <long-arrow-left />
       </div>
 
       <span class="back-button-text">Back</span>
-
     </button>
 
-    <loading data-testid="country-item-loading" :active="isLoading.country"></loading>
+    <loading data-testid="country-item-loading" :active="isLoading.country" />
 
     <error-message
-    v-if="hasError"
-    :error-title="error.title"
-    :error-message="error.message"
-    :error-code="error.code">
-    </error-message>
+      v-if="hasError"
+      :error-title="error.title"
+      :error-message="error.message"
+      :error-code="error.code"
+    />
 
     <div class="country" v-if="hasCountry" data-testid="country-item">
 
       <div class="country-flag">
-        <img :src="country.flag" :alt="`${country.name} Flag`" :title="`${country.name} Flag`">
+        <img :src="country.flags.svg" :alt="`${country.name.official} Flag`" :title="`${country.name.official} Flag`">
       </div>
 
       <div class="country-details">
 
-        <h2 class="country-name">{{ country.name }}</h2>
+        <h2 class="country-name">{{ country.name.official }}</h2>
 
         <div class="country-details-list-container">
 
@@ -36,7 +34,7 @@
 
             <li class="country-details-list-item">
               <span class="bold-600">Native Name: </span>
-              <span>{{ country.nativeName }}</span>
+              <span>{{ country.name.nativeName[Object.keys(country.name.nativeName)[0]].official }}</span>
             </li>
 
             <li class="country-details-list-item">
@@ -56,39 +54,42 @@
 
             <li class="country-details-list-item">
               <span class="bold-600">Capital: </span>
-              <span data-testid="country-capital">{{ country.capital || "Doesn't have a capital" }}</span>
+              <span data-testid="country-capital">{{ country.capital.join(', ') || "Doesn't have a capital" }}</span>
             </li>
 
           </ul>
 
           <ul class="country-details-list">
-            <li class="country-details-list-item"><span class="bold-600">Top Level Domain:</span> {{ topLevelDomains }}</li>
+            <li class="country-details-list-item"><span class="bold-600">Top Level Domains:</span> {{ topLevelDomains }}</li>
             <li class="country-details-list-item"><span class="bold-600">Currencies:</span> {{ currencies }}</li>
             <li class="country-details-list-item"><span class="bold-600">Languages:</span> {{ languages }}</li>
           </ul>
 
         </div>
 
-        <div class="country-border"
-        data-testid="country-border">
+        <div class="country-border" data-testid="country-border">
 
           <h3 class="bold-600">Border Countries: 
-            <span
-            v-if="!hasBorders">No borders</span>
+            <span v-if="!hasBorders">No borders</span>
           </h3>
 
           <loading
-          size="small"
-          :active="isLoading.borders"
-          data-testid="country-item-loading"></loading>
+            size="small"
+            :active="isLoading.borders"
+            data-testid="country-item-loading"
+          />
 
-          <div class="country-border-tag-container"
-          v-if="hasBorders">
-            <router-link class="country-border-tag cursor-pointer"
-            v-for="borderCountry in countryBorders"
-            :key="borderCountry"
-            :to="{ name: 'CountryDetail', params: {country: borderCountry} }"
-            data-testid="country-border-tag">{{ borderCountry }}</router-link>
+          <div
+            v-if="hasBorders"
+            class="country-border-tag-container"
+          >
+            <router-link
+              v-for="borderCountry in countryBorders"
+              :key="borderCountry"
+              :to="{ name: 'CountryDetail', params: {country: borderCountry} }"
+              class="country-border-tag cursor-pointer"
+              data-testid="country-border-tag">{{ borderCountry }}
+            </router-link>
           </div>
 
         </div>
@@ -136,14 +137,19 @@ export default {
         borders: true,
       },
       country: {
-        flag: '',
-        name: '',
-        nativeName: '',
+        flags: {
+
+        },
+        name: {
+          common: '',
+          official: '',
+          nativeName: {}
+        },
         region: '',
         subregion: '',
-        capital: '',
+        capital: [],
         population: 0,
-        topLevelDomain: [],
+        tld: [],
         currencies: [],
         languages: [],
         borders: [],
@@ -171,14 +177,13 @@ export default {
           const countryBorderNamesResponse = await this.fetchCountriesByAlpha3Code(this.country.borders)
           this.countryBorders = countryBorderNamesResponse.data.map((country) => country.name);
         }
-      }
-      catch(error){
+      } catch(error) {
         if( error.response.status === 404 ){
           this.error.message = 'Invalid country name';
         }
 
         this.error.code = error.response.status;
-      }finally{
+      } finally {
         this.isLoading.country = false;
         this.isLoading.borders = false;
       }
@@ -188,15 +193,15 @@ export default {
   computed: {
 
     topLevelDomains(){
-      return this.country.topLevelDomain.join(', ')
+      return this.country.tld.join(', ')
     },
 
     currencies(){
-      return this.country.currencies.map(currency => currency.name).join(', ')
+      return Object.values(this.country.currencies).map(currency => currency.name).join(', ')
     },
 
     languages(){
-      return this.country.languages.map(language => language.name).join(', ')
+      return Object.values(this.country.languages).map(language => language).join(', ')
     },
 
     population(){
@@ -208,7 +213,7 @@ export default {
     },
 
     hasCountry(){
-      return this.country.name.length > 0 && !this.isLoading.country
+      return this.country.name && Object.values(this.country.name).some(Boolean) && !this.isLoading.country
     },
 
     hasError(){
