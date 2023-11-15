@@ -2,16 +2,16 @@
 
   <div class="country-card" data-testid="country-card">
 
-    <router-link class="country-flag" :to="{ name: 'CountryDetail', params: {country: country.name} }">
+    <router-link class="country-flag" :to="{ name: 'CountryDetail', params: {country: country.name.official} }">
       <img
       data-testid="country-flag-image"
-      :src="country.flag"
-      :alt="country.name"
-      :title="country.name">
+      :src="country.flags.svg"
+      :alt="country.name.official"
+      :title="country.name.official">
     </router-link>
 
     <div class="country-card-content">
-      <h2 class="country-name">{{ country.name }}</h2>
+      <h2 class="country-name">{{ country.name.official }}</h2>
 
       <ul class="country-information">
 
@@ -30,7 +30,7 @@
         <li class="country-information-item">
           <span class="country-information-name bold-600">Capital: </span>
           <span class="country-information-value"
-          data-testid="country-information-value">{{ country.capital || "Doesn't have capital" }}</span>
+          data-testid="country-information-value">{{ country.capital.join(', ') || "Doesn't have capital" }}</span>
         </li>
 
       </ul>
