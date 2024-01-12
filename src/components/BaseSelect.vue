@@ -2,15 +2,16 @@
   <div class="base-select">
 
     <button
+    type="button"
     class="base-select-list-trigger"
     @click.stop="openSelect()"
     aria-controls="base-select"
     aria-haspopup="listbox"
     :aria-expanded="[activeList]">
       <span class="list-trigger-text">{{ selected.name }}</span>
-      <div class="svg-icon" role="presentation">
+      <span class="svg-icon" aria-hidden="true">
         <chevron-down />
-      </div>
+      </span>
     </button>
 
     <ul

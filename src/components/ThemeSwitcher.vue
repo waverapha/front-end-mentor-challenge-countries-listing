@@ -1,12 +1,15 @@
 <template>
-  <button class="theme-switcher bold-600"
-  @click="changeTheme()"
-  data-testid="theme-switcher">
-      <div class="svg-icon" role="presentation">
+  <button
+    type="button"
+    class="theme-switcher bold-600"
+    data-testid="theme-switcher"
+    @click="changeTheme()"
+  >
+      <span class="svg-icon">
           <moon-o v-if="ui.theme.choosed === 'light'" />
           <moon v-if="ui.theme.choosed === 'dark'" />
-      </div>
-      <span :aria-label="[`${ui.theme.choosed} Mode`]"><span class="theme-switcher-text" aria-hidden="true">Dark Mode</span></span>
+      </span>
+      <span class="theme-switcher-text">{{ ui.theme.choosed }} Mode</span>
   </button>
 </template>
 
