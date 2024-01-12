@@ -1,28 +1,27 @@
 <template>
   <main class="country-listing-page">
-
     <div class="search-and-filter-bar">
-      <country-filter-by-name></country-filter-by-name>
-      <country-filter-by-region></country-filter-by-region>
+      <country-filter-by-name />
+      <country-filter-by-region />
     </div>
 
-    <loading data-testid="country-list-loading" :active="isLoading"></loading>
+    <loading data-testid="country-list-loading" :active="isLoading" />
 
     <error-message
-    v-if="!isLoading && !hasCountries"
-    error-title="No countries here!"
-    :error-message="error.message"
-    :error-code="error.code">
+      v-if="!isLoading && !hasCountries"
+      error-title="No countries here!"
+      :error-message="error.message"
+      :error-code="error.code">
     </error-message>
 
-    <div class="country-list" v-if="!isLoading && hasCountries" data-testid="country-list">
+    <section class="country-list" v-if="!isLoading && hasCountries" data-testid="country-list">
       <country-card
-      v-for="country in filteredCountries"
-      :key="country.numericCode"
-      :country="country"
+        v-for="(country, index) in filteredCountries"
+        :key="country.numericCode"
+        :country="country"
+        :lazy-loading="index > 12"
       />
-    </div>
-
+    </section>
   </main>
 </template>
 
@@ -32,7 +31,6 @@ import CountryCard from '@/components/Country/CountryCard'
 import CountryFilterByRegion from '@/components/Country/CountryFilterByRegion.vue'
 import CountryFilterByName from '@/components/Country/CountryFilterByName.vue'
 import Loading from '@/components/Loading.vue'
-import ErrorMessage from '@/components/ErrorMessage.vue'
 
 import { mapFields } from 'vuex-map-fields'
 import { mapActions, mapGetters } from 'vuex'
@@ -43,7 +41,7 @@ export default {
     CountryFilterByRegion,
     CountryFilterByName,
     Loading,
-    ErrorMessage
+    ErrorMessage: () => import('@/components/ErrorMessage.vue'),
   },
 
   created(){

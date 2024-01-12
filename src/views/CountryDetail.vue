@@ -1,7 +1,7 @@
 <template>
   <div class="country-detail-page">
     
-    <button class="back-button" @click="$router.back()">
+    <button type="button" class="back-button" @click="$router.back()">
       <div class="svg-icon" rel="presentation">
         <long-arrow-left />
       </div>

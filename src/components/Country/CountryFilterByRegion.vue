@@ -1,11 +1,11 @@
 <template>
   <div class="country-filter-by-continent">
     <base-select
+    data-testid="filter-by-region"
     :no-option-item="{ id: null, name: 'Filter by Region' }"
     :selected="filter.region"
     :options=regions
     @change="filterByRegion"
-    data-testid="filter-by-region"
     >
     </base-select>
   </div>
