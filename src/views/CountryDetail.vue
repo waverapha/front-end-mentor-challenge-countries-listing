@@ -1,10 +1,9 @@
 <template>
   <div class="country-detail-page">
-    
     <button type="button" class="back-button" @click="$router.back()">
-      <div class="svg-icon" rel="presentation">
+      <span class="svg-icon" aria-hidden="true">
         <long-arrow-left />
-      </div>
+      </span>
 
       <span class="back-button-text">Back</span>
     </button>
@@ -19,19 +18,15 @@
     />
 
     <div class="country" v-if="hasCountry" data-testid="country-item">
-
       <div class="country-flag">
-        <img :src="country.flags.svg" :alt="`${country.name.official} Flag`" :title="`${country.name.official} Flag`">
+        <img :src="country.flags.svg" :alt="`${country.name.official} official flag`" :title="`${country.name.official} Flag`">
       </div>
 
-      <div class="country-details">
-
+      <section class="country-details">
         <h2 class="country-name">{{ country.name.official }}</h2>
 
         <div class="country-details-list-container">
-
           <ul class="country-details-list">
-
             <li class="country-details-list-item">
               <span class="bold-600">Native Name: </span>
               <span>{{ country.name.nativeName[Object.keys(country.name.nativeName)[0]].official }}</span>
@@ -56,7 +51,6 @@
               <span class="bold-600">Capital: </span>
               <span data-testid="country-capital">{{ country.capital.join(', ') || "Doesn't have a capital" }}</span>
             </li>
-
           </ul>
 
           <ul class="country-details-list">
@@ -64,11 +58,9 @@
             <li class="country-details-list-item"><span class="bold-600">Currencies:</span> {{ currencies }}</li>
             <li class="country-details-list-item"><span class="bold-600">Languages:</span> {{ languages }}</li>
           </ul>
-
         </div>
 
-        <div class="country-border" data-testid="country-border">
-
+        <section class="country-border" data-testid="country-border">
           <h3 class="bold-600">Border Countries: 
             <span v-if="!hasBorders">No borders</span>
           </h3>
@@ -91,11 +83,9 @@
               data-testid="country-border-tag">{{ borderCountry }}
             </router-link>
           </div>
-
-        </div>
-      </div>
+        </section>
+      </section>
     </div>
-
   </div>
 </template>
 
@@ -104,13 +94,11 @@
 import Loading from '@/components/Loading';
 
 import { mapActions } from 'vuex';
-import ErrorMessage from '@/components/ErrorMessage.vue';
 
 export default {
-
   components: {
     Loading,
-    ErrorMessage
+    'error-message': () => import('@/components/ErrorMessage.vue')
   },
 
   props: {
@@ -213,11 +201,11 @@ export default {
     },
 
     hasCountry(){
-      return this.country.name && Object.values(this.country.name).some(Boolean) && !this.isLoading.country
+      return this.country.name?.official && Object.values(this.country.name).some(Boolean) && !this.isLoading.country
     },
 
     hasError(){
-      return this.country.name.length <= 0 && !this.isLoading.country
+      return !this.hasCountry && !this.isLoading.country
     }
   },
 
