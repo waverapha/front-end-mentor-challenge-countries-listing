@@ -80,7 +80,9 @@
               :key="borderCountry"
               :to="{ name: 'CountryDetail', params: {country: borderCountry} }"
               class="country-border-tag cursor-pointer"
-              data-testid="country-border-tag">{{ borderCountry }}
+              data-testid="country-border-tag"
+            >
+              {{ borderCountry }}
             </router-link>
           </div>
         </section>
@@ -163,7 +165,7 @@ export default {
         if( this.country.borders.length > 0 ){
           this.isLoading.borders = true;
           const countryBorderNamesResponse = await this.fetchCountriesByAlpha3Code(this.country.borders)
-          this.countryBorders = countryBorderNamesResponse.data.map((country) => country.name);
+          this.countryBorders = countryBorderNamesResponse.data.map((country) => country.name.official);
         }
       } catch(error) {
         if( error.response.status === 404 ){
