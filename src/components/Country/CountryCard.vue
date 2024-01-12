@@ -1,5 +1,5 @@
 <template>
-  <article class="country-card" data-testid="country-card">
+  <div class="country-card" data-testid="country-card">
     <router-link class="country-flag" :to="{ name: 'CountryDetail', params: {country: country.name.official} }">
       <img
         width="384"
@@ -13,7 +13,7 @@
       >
     </router-link>
 
-    <div class="country-card-content">
+    <section class="country-card-content">
       <h2 class="country-name">{{ country.name.official }}</h2>
 
       <dl class="country-information">
@@ -46,8 +46,8 @@
         </div>
       </dl>
 
-    </div>
-  </article>
+    </section>
+  </div>
 </template>
 
 <script>
