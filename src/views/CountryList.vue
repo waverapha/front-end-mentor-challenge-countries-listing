@@ -14,14 +14,14 @@
       :error-code="error.code">
     </error-message>
 
-    <section class="country-list" v-if="!isLoading && hasCountries" data-testid="country-list">
+    <div class="country-list" v-if="!isLoading && hasCountries" data-testid="country-list">
       <country-card
         v-for="(country, index) in filteredCountries"
         :key="country.numericCode"
         :country="country"
         :lazy-loading="index > 12"
       />
-    </section>
+    </div>
   </main>
 </template>
 
